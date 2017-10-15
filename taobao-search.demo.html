@@ -98,7 +98,7 @@
 	<div class="search_container">
 		<div id="search-tab" class="search_list">
 			<ul>
-				<li id="tab_1" class="selected">
+				<li id="tab_1" class="selected" data-control="item">
 					<a href="javascript:;">宝贝</a>
 				</li>
 				<li id="tab_2">
@@ -112,7 +112,7 @@
 					<a href="http://www.taobao.com">高级<br>搜索</a>
 				</div>
 				<div class="search-btn">
-					<button class="btn-search" type="submit">搜 索</button>
+					<button id="btnSearch" class="btn-search" type="button">搜 索</button>
 				</div>
 				<div class="search-commond-panel">
 					<input id="search_input" type="text" x-webkit-speech=""/>
@@ -130,6 +130,8 @@
 
 		$("#tab_2").bind("mouseover", addSelectedClass);
 		$("#tab_2").bind("click", changeContent);
+
+		$("#btnSearch").bind("click", search);
 
 		function addTabClass(){
 			$(this).addClass("trigger-hover");
@@ -154,6 +156,19 @@
 			$searchTab.addClass("search_list");	
 			$(this).addClass("selected");		
 		}
+
+		function search(){
+			var q = $("#search_input").val();
+			var search_type = $("#search-tab li.selected").data("control");
+			var url = "";
+			if("item" === search_type){
+				url = "https://s.taobao.com/search?q="+q+"&imgfile=&commend=all&ssid=s5-e&search_type="+search_type+"&sourceId=tb.index&spm=a21bo.50862.201856-taobao-item.1&ie=utf8&initiative_id=tbindexz_20171015";
+			}else{
+				url = "https://shopsearch.taobao.com/search?app=shopsearch&q="+q+"&imgfile=&js=1&stats_click=search_radio_all%3A1&initiative_id=staobaoz_20171015&ie=utf8";
+			}
+			window.open(url);
+		}
+		
 	</script>
 </body>
 </html>
