@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<title>taobao search demo</title>
+	<style type="text/css">
+	    @font-face{font-family: iconfont; src:url(http://g.tbcdn.cn/tb/icon-font/1.1.5/iconfont.eot)}
+		body{
+			font: 12px tahoma,arial,sans-serif;
+		}
+		a{
+			text-decoration: none;
+		}
+		ul{
+			list-style: none;
+			display: block;
+		}
+		ul,li{
+			padding: 0;
+			margin: 0;
+		}
+		.search-tips, .search-btn{
+			float: right;
+		}
+		.search-tips{
+			color: #6c6c6c;
+			padding: 6px 0 0 15px;
+		}
+		.btn-search{
+			font-size: 18px;
+		    font-weight: 700;
+		    color: #FFF;
+		    background-color: #FF4200;
+		    cursor: pointer;
+		    height: 47px;
+		    border: 0;
+		    width: 100px;
+		}
+		.search_container{
+			position: relative;
+		}
+		.search-commond-panel{
+			background-color: #f50;
+			overflow: hidden;
+			padding: 3px 0 3px 77px;
+		}
+		.search-commond-panel input{
+			height: 39px;
+			line-height: 39px;
+			width: 100%;
+			border: 0;
+			outline: none;
+			background-color: #fff;
+		}
+		.search-commond-panel i{
+			position: absolute;
+		}
+		.icon-font{
+			font-family: iconfont!important;
+			font-size: 18px;
+			font-style: normal;
+		}	
+		.search_list{
+			position: absolute;
+			top: 3px;
+			left: 3px;
+			width: 72px;
+			overflow: hidden;
+			background-color: #fff;
+			border-left: 1px solid #f6f6f6;
+			border-right: 1px solid #e5e5e5;
+			height: 41px;
+			text-align: center;
+		}
+		.search_list li{
+			display: none;
+			height: 41px;
+			line-height: 39px;
+			overflow: hidden;
+		}
+		.search_list li a{
+			color: #6c6c6c;
+		}
+		.search_list .selected{
+			background-color: #f6f6f6;
+			display: block;
+		}
+		.trigger-hover{
+			height: auto;
+		}
+		.trigger-hover li{
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<div class="search_container">
+		<div id="search-tab" class="search_list">
+			<ul>
+				<li id="tab_1" class="selected">
+					<a href="javascript:;">宝贝</a>
+				</li>
+				<li id="tab_2">
+					<a href="javascript:;">店铺</a>
+				</li>
+			</ul>
+		</div>
+		<div class="search_panel">
+			<form action="">
+				<div class="search-tips">
+					<a href="http://www.taobao.com">高级<br>搜索</a>
+				</div>
+				<div class="search-btn">
+					<button class="btn-search" type="submit">搜 索</button>
+				</div>
+				<div class="search-commond-panel">
+					<input id="search_input" type="text" x-webkit-speech=""/>
+					<i class="icon-font"></i>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		$("#search-tab").on("mouseover", addTabClass);
+		$("#tab_1").bind("mouseover", addSelectedClass);
+		$("#tab_1").bind("click", changeContent);
+
+		$("#tab_2").bind("mouseover", addSelectedClass);
+		$("#tab_2").bind("click", changeContent);
+
+		function addTabClass(){
+			$(this).addClass("trigger-hover");
+		}
+		function addSelectedClass(){
+			if($(this).attr("id") === "tab_1"){
+				$("#tab_2").removeAttr("class");
+			}else{
+				$("#tab_1").removeAttr("class");
+			}
+			if(!$(this).hasClass("selected")){
+				$(this).addClass("selected");
+			}
+		}
+		function removeSelectedClass(){
+			$(this).removeAttr("class");
+			$(this).addClass("");
+		}
+		function changeContent(){
+			var $searchTab = $("#search-tab");
+			$searchTab.removeAttr("class");
+			$searchTab.addClass("search_list");	
+			$(this).addClass("selected");		
+		}
+	</script>
+</body>
+</html>

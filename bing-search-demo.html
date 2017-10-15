@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<title>bing search demo</title>
+	<style type="text/css">
+		body{
+			background-color: #333;
+		}
+		form{
+			float: left;
+			background-color: #fff;
+			padding: 5px;
+		}
+		.bg-div{
+			background-image: url(imgs/river.jpg);
+			width: 100%;
+			height: 646px;
+			margin: 0 auto;
+			position: relative;
+		}
+		.logo{
+			background-image: url(imgs/logo.png);
+			width: 107px;
+			height: 53px;
+			float: left;
+			margin: -4px 18px 0 0;
+		}
+		.search-input-text{
+			border: 0;
+			float: left;
+			height: 25px;
+			line-height: 25px;
+			outline: none;
+			width: 350px;
+		}
+		.search-input-button{
+			border: 0;
+			background-image: url(imgs/search-button.png);
+			width: 29px;
+			height: 29px;
+			float: left;
+		}
+		.search-box{
+			position: absolute;
+			top: 200px;
+			left: 300px;
+		}
+		.suggest{
+			width: 389px;
+			background-color: #fff;
+			border-top: 1px solid #999;
+			position: absolute;
+		}
+		.suggest ul{
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+		.suggest ul li{
+			padding: 3px;
+			font-size: 14px;
+			line-height: 25px;
+			cursor: pointer;
+		}
+		.suggest ul li:hover{
+			text-decoration: underline;
+			background-color: #e5e5e5;
+		}
+	</style>
+</head>
+<body>
+	<div class="bg-div">
+		<div class="search-box">
+			<div class="logo"></div>
+			<form action="https://cn.bing.com/search" id="search-form">
+				<input type="text" class="search-input-text" id="search_input" />
+				<input type="submit" class="search-input-button" value="" />
+			</form>
+		</div>
+	</div>
+	<div class="suggest" id="search-suggest" style="display: none;">
+		<ul>
+			<!--
+			<li>搜索结果1</li>
+			<li>搜索结果2</li>
+			<li>搜索结果3</li>
+			<li>搜索结果4</li>
+			<li>搜索结果5</li>
+			-->
+		</ul>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script>
+		$("#search_input").bind("keyup", showTips);
+		$(document).bind("click", hideSearchForm);
+		$(document).delegate("li", "click", goToPage);
+
+		function showTips(){
+			var input_val = $("#search_input").val();
+			if(input_val.trim() === ""){
+				hideSearchForm();
+				return;
+			}
+			renderUl(input_val);
+			showSearchForm();
+		}
+		function showSearchForm(){
+			var $searchForm = $("#search-form");
+			var offset = $searchForm.offset();
+			var sf_height = $searchForm.height();
+			$("#search-suggest").show().css({
+				top:offset.top + sf_height + 10,
+				left:offset.left
+			});
+		}
+		function hideSearchForm(){
+			$("#search-suggest").hide();
+		}
+		function renderUl(val){
+			var $ul = $(".suggest ul");
+			var children_len = $ul.children().length;
+			if(children_len < 5){
+				for(var i = 0; i < 5; i++){
+					var li = "<li>搜索结果" + (i+1) +"</li>";
+					$ul.append(li);
+				}
+			}
+		}
+		function goToPage(){
+			location.href = "http://www.baidu.com";
+		}
+	</script>
+</body>
+</html>
